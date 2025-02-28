@@ -75,7 +75,17 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-conventional-changelog",
+      "types": {
+        "feat": {
+          "description": "新功能",
+          "title": "Features"
+        },
+        "fix": {
+          "description": "Bug 修复",
+          "title": "Bug Fixes"
+        }
+      }
     }
   }
 }

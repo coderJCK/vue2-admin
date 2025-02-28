@@ -45,7 +45,7 @@ npm i prettier eslint-config-prettier eslint-plugin-prettier -D
 npm install -g commitizen
 ```
 
-提交时选择类型
+提交
 
 ```
 git cz
