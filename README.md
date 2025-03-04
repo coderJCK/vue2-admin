@@ -12,7 +12,7 @@ Eslint + Prettier + Husky + Commitlint+ Lint-staged
 npm install -g f2elint
 ```
 
-### 代码规范
+### 开发规范
 
 1. 代码检查工具
 
@@ -33,13 +33,15 @@ npm i prettier eslint-config-prettier eslint-plugin-prettier -D
 
 创建.prettierrc
 
-### git规范
+### git提交规范
 
 1. husky 操作git勾子的工具
 2. lint-staged 本地暂存代码检查工具
 3. commitlint 信息检验工具
 4. commitizen 辅助commit信息工具
    全局安装
+
+安装commitizen
 
 ```
 npm install -g commitizen
@@ -53,10 +55,18 @@ git cz
 
 ## axios二次封装
 
-- 基础配置
-- 拦截器
-- 不同错误码处理
-- 不同请求类型封装
-- 请求取消
-- 单元测试封装
-- 模拟请求
+> 针对 axios 的二次封装，合理的策略应兼顾灵活性、可维护性和功能性。以下是一个综合性强、可扩展性高的封装方案，适用于中大型项目：
+
+1. 封装实例与基本配置 — base.js
+2. 拦截器封装 - base.js
+3. 错误码处理封装 - error.js
+4. 封装方式封装 - methods.js
+5. 模块化API封装 - requests.js
+6. 高级功能集成
+   - 请求取消 - cancel.js
+   - 大文件上传 - slice.js
+   - 请求重试 - retry.js
+
+##
+
+##

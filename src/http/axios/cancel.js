@@ -1,4 +1,6 @@
+// 请求取消封装
 import axios from 'axios';
+
 // 正在进行的请求的字典
 const pendingRequests = new Map();
 

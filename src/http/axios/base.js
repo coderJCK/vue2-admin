@@ -1,15 +1,21 @@
+// axios 封装
 import axios from 'axios';
-import { addRequest, removeRequest } from './axiosCancel';
+import { addRequest, removeRequest } from './cancel';
+import { handlerHttpError, handlerServerError } from './error';
 
-const service = axios.create({
-  baseURL: '/api',
-  timeout: 15000,
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8',
-  },
-});
+// 业务成功状态码
+const SUCCESS_CODE = '000000';
 
-// 请求拦截器
+// 创建实例与基础配置
+const service = (options) => {
+  axios.create({
+    baseURL: '/api',
+    timeout: 10000,
+    ...options,
+  });
+};
+
+// 拦截器封装
 service.interceptors.request.use(
   (config) => {
     // 在请求开始前，对之前的请求做检查取消操作
@@ -18,6 +24,7 @@ service.interceptors.request.use(
     addRequest(config);
 
     // token携带处理...
+
     // 全局loading处理...
     return config;
   },
@@ -25,24 +32,32 @@ service.interceptors.request.use(
     return Promise.reject(error);
   },
 );
-// 响应拦截器
 service.interceptors.response.use(
   (response) => {
     // loading关闭
+
     // 请求成功后，从pendingRequests中移除请求
     removeRequest(response.config);
     // 不同业务状态码处理...
-    return response;
+    if (response.data.code === SUCCESS_CODE) {
+      return response;
+    } else {
+      handlerServerError(response.data);
+    }
   },
   (error) => {
     // 请求成功后，从pendingRequests中移除请求
     removeRequest(error.config || {});
-    // loading关闭...
+    // todo loading关闭...
+
     if (axios.isCancel(error)) {
       // console.log('重复请求被取消', error.message);
+    } else {
+      // 不同HTTP状态码处理...
+      handlerHttpError(error);
     }
-    // 不同HTTP状态码处理...
-    // 网络异常处理...
     return Promise.reject(error);
   },
 );
+
+export default service;
